@@ -37,11 +37,14 @@ const Post = (props) => {
                             <Avatar alt="Avatar" src={props.proPic} />
                         }
                         action={
-                            <IconButton aria-label="settings">
-                              <MoreHorizIcon aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} />
+                            <div>
+                                <IconButton aria-label="settings" onClick={handleClick}>
+                                    <MoreHorizIcon aria-controls="simple-menu" aria-haspopup="true" />
+                                </IconButton>
                                 <Menu
                                     id="fade-menu"
                                     anchorEl={anchorEl}
+                                    getContentAnchorEl={null} // if not given then it will generate an error
                                     keepMounted
                                     open={Boolean(anchorEl)}
                                     onClose={handleClose}
@@ -52,7 +55,7 @@ const Post = (props) => {
                                     <MenuItem onClick={handleClose}>Edit</MenuItem>
                                     <MenuItem onClick={handleClose}>Delete</MenuItem>
                                 </Menu>
-                            </IconButton>
+                            </div>
                         }
                         title={props.name}
                         subheader={`posted ${props.time}h ago`}

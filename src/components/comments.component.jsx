@@ -3,13 +3,13 @@ import CommentBox from './comment-box.component';
 import Comment from './comment.component'
 
 const Comments = (props) => {
-    console.log(props.userId)
+    // console.log(props.userId)
     return (
         <div>
             <div>
                 {
                     props.comments.map((comment) => (
-                        <Comment proPic={comment.proPic} body={comment.body} />
+                        <Comment key={comment.id} proPic={comment.proPic} body={comment.body} />
                     ))
                 }
             </div>
