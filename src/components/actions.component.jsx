@@ -7,22 +7,33 @@ import Typography from '@material-ui/core/Typography';
 import ShareIcon from '@material-ui/icons/Share';
 import Divider from '@material-ui/core/Divider';
 
-const Actions = () => {
+const Actions = (props) => {
+
+    const handleLike = () => {
+        const value = (props.isLiked === true) ? -1 : +1;
+        props.onLikeAction(value, !(props.isLiked), props.id-1)
+    }
+
+    const btnColor = (props.isLiked === true) ? 'blue' : '';
+    const btnBackground = (props.isLiked === true) ? '#dce6f2' : '';
+
     return (
         <>
             <CardActions disableSpacing>
-            <div style={{
-                    display: 'flex',
-                    alignItems: 'stretch',
-                    width: '100%',
-                    justifyContent:"space-between",
-                    flexDirection: 'row',
-                }}
+                <div style={{
+                        display: 'flex',
+                        alignItems: 'stretch',
+                        width: '100%',
+                        justifyContent:"space-between",
+                        flexDirection: 'row',
+                    }}
                 >
                     <div>
-                        <IconButton aria-label="like" style={{borderRadius: 0, padding: '10px 50px'}}>
-                            <ThumbUpAltOutlinedIcon />
-                            <Typography style={{marginLeft:'5px'}} color="textPrimary" component="p">Like</Typography>
+                        <IconButton aria-label="like" style={{borderRadius: 0, padding: '10px 50px', backgroundColor: `${btnBackground}`}} onClick={handleLike}>
+                            <ThumbUpAltOutlinedIcon style={{color: `${btnColor}`}} />
+                            <Typography style={{marginLeft:'5px', color: `${btnColor}`}} color="textPrimary" component="p">
+                                { props.isLiked === true ? 'Liked' : 'Like'}
+                            </Typography>
                         </IconButton>
                     </div>
                     <div>

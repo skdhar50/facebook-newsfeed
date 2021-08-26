@@ -11,22 +11,23 @@ class Posts extends React.Component {
     }
 
     handleAddComment = ( new_comment, postId ) => {
-        // console.log(postId);
-        // const new_state = {...this.state.posts };
+
         const { comments } = this.state.posts[postId-1];
-        // new_state.posts.comment.push( new_comment );
-        // let {comments} = new_state;
-        // console.log(new_state);
-        comments.push( new_comment );
-        // console.log(comments, new_comment);
-
-        // this.setState.posts[postId-1].comments.push( new_comment );
-
-        // console.log(this.state.posts)
+        comments.push( new_comment )
         
         this.setState({
             posts: this.state.posts
         })
+    }
+
+    handleLike = (value, status, id) => {
+        const temp = {...this.state.posts};
+        temp[id].isLiked = status;
+        temp[id].like += value;
+
+        this.setState({
+            posts: this.state.posts
+        });
     }
 
     render() {
@@ -34,7 +35,7 @@ class Posts extends React.Component {
             <div>
                 {
                     this.state.posts.map(({userId, ...otherPosts}) =>
-                        <Post key={userId} id={userId} onAddComment={this.handleAddComment} { ...otherPosts } />
+                        <Post key={userId} id={userId} onLikeAction={this.handleLike} onAddComment={this.handleAddComment} { ...otherPosts } />
                     )
                 }
             </div>

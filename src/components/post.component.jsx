@@ -67,8 +67,18 @@ const Post = (props) => {
                         }
                         </Typography>
                     </CardContent>
-
-                    <Actions />
+                    
+                    <div style={{
+                        display: 'flex',
+                        justifyContent:"space-between",
+                        flexDirection: 'row',
+                        marginLeft: "10px",
+                        marginRight: "30px"
+                    }}>
+                        <Typography variant="subtitle1" color="textPrimary">{props.like} likes</Typography>
+                        <Typography variant="subtitle1" color="textPrimary" style={{color:"#a6acb3", cursor: "pointer"}}>{props.comments.length} Comments</Typography>
+                    </div>
+                    <Actions id={props.id} isLiked={props.isLiked} onLikeAction={props.onLikeAction} />
                     <Comments
                         userPic={props.proPic}
                         userId={props.id}
