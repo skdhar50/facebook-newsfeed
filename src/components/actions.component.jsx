@@ -37,7 +37,7 @@ const Actions = (props) => {
                         </IconButton>
                     </div>
                     <div>
-                        <IconButton aria-label="comment" style={{borderRadius: 0, padding: '10px 50px'}}>
+                        <IconButton aria-label="comment" style={{borderRadius: 0, padding: '10px 50px'}} onClick={props.handleShowComments}>
                             <ChatBubbleOutlineIcon />
                             <Typography style={{marginLeft:'5px'}} color="textPrimary" component="p">Comment</Typography>
                         </IconButton>

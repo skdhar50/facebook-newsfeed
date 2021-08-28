@@ -1,6 +1,10 @@
 import React from 'react';
 import Actions from './actions.component';
 import Comments from './comments.component';
+import SimpleDialog from './simple-dialog.component';
+import PostEdit from './post-edit.component';
+import PostDelete from './post-delete.component';
+import PostSettingMenu from './post-setting-menu.component';
 
 import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
@@ -8,89 +12,142 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Fade from '@material-ui/core/Fade';
 
+class Post extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            openModal: false,
+            openDeleteModal: false,
+            anchorEl: null,
+            showComments: false
+        }
+    }
 
-const Post = (props) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    handleShowComments = () => {
+        this.setState({showComments: !(this.state.showComments)});
+    }
 
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
+    handleClick = (event) => {
+        this.setState({anchorEl: event.currentTarget});
     };
   
-    const handleClose = () => {
-      setAnchorEl(null);
+    handleClose = () => {
+        this.setState({anchorEl: !Boolean(this.state.anchorEl)});
     };
 
-    // console.log(props.onAddComment);
+    handleClickOpen = (value) => {
+        this.setState({anchorEl: value});
+        this.setState({openModal: value});
+        this.setState({openDeleteModal: value});
+    };
 
-    return (
-        <div>
-            <Container maxWidth="sm" style={{ backgroundColor: 'lightgray', padding: '0.5em' }}>
-                <Card variant="outlined">
-                    <CardHeader
-                        avatar={
-                            <Avatar alt="Avatar" src={props.proPic} />
-                        }
-                        action={
-                            <div>
-                                <IconButton aria-label="settings" onClick={handleClick}>
-                                    <MoreHorizIcon aria-controls="simple-menu" aria-haspopup="true" />
-                                </IconButton>
-                                <Menu
-                                    id="fade-menu"
-                                    anchorEl={anchorEl}
-                                    getContentAnchorEl={null} // if not given then it will generate an error
-                                    keepMounted
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleClose}
-                                    TransitionComponent={Fade}
-                                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                                    transformOrigin={{ vertical: "top", horizontal: "center" }}
-                                >
-                                    <MenuItem onClick={handleClose}>Edit</MenuItem>
-                                    <MenuItem onClick={handleClose}>Delete</MenuItem>
-                                </Menu>
-                            </div>
-                        }
-                        title={props.name}
-                        subheader={`posted ${props.time}h ago`}
+    render() {
+        const {
+            id,
+            body,
+            like,
+            name,
+            time,
+            proPic,
+            isLiked,
+            comments,
+            onEditPost,
+            onLikeAction,
+            onAddComment,
+            onDeletePost
+        } = this.props;
+
+        return (
+            <>
+                <SimpleDialog
+                    title="Edit Post"
+                    open={Boolean(this.state.openModal)}
+                >
+                    <PostEdit
+                        id={id}
+                        body={body}
+                        onEditPost={onEditPost}
+                        handleClickOpen={this.handleClickOpen}
                     />
-                    <CardContent>
-                        <Typography variant="body2" color="textPrimary" component="p">
+                </SimpleDialog>
+
+                <SimpleDialog
+                    title="Delete Post"
+                    open={Boolean(this.state.openDeleteModal)}
+                >
+                    <PostDelete
+                        id={id}
+                        onDeletePost={onDeletePost}
+                        handleClickOpen={this.handleClickOpen}
+                    />
+                </SimpleDialog>
+
+
+                <Container maxWidth="sm" style={{ backgroundColor: 'lightgray', padding: '0.5em' }}>
+                    <Card variant="outlined">
+                        <CardHeader
+                            avatar={
+                                <Avatar alt="Avatar" src={proPic} />
+                            }
+                            action={
+                                <div>
+                                    <PostSettingMenu
+                                        id={id}
+                                        handleClick={this.handleClick}
+                                        anchorEl={this.state.anchorEl}
+                                        onEditPost={() => this.setState({openModal: true})}
+                                        onDeletePost={() => this.setState({openDeleteModal: true})}
+                                    />
+                                </div>
+                            }
+                            title={name}
+                            subheader={`posted ${time}h ago`}
+                        />
+                        <CardContent>
+                            <Typography variant="body2" color="textPrimary" component="p">
+                            {
+                                body
+                            }
+                            </Typography>
+                        </CardContent>
+                        
+                        <div style={{
+                            display: 'flex',
+                            justifyContent:"space-between",
+                            flexDirection: 'row',
+                            marginLeft: "10px",
+                            marginRight: "30px"
+                        }}>
+                            <Typography variant="subtitle1" color="textPrimary">
+                                {like} likes
+                            </Typography>
+                            <Typography variant="subtitle1" color="textPrimary" style={{color:"#a6acb3", cursor: "pointer"}}>
+                                {comments.length} Comments
+                            </Typography>
+                        </div>
+
+                        <Actions
+                            id={id}
+                            isLiked={isLiked}
+                            onLikeAction={onLikeAction}
+                            handleShowComments={this.handleShowComments}
+                        />
+
                         {
-                            props.body
+                            this.state.showComments &&
+                            <Comments
+                                userPic={proPic}
+                                userId={id}
+                                onAddComment={onAddComment}
+                                comments={comments}
+                            />
                         }
-                        </Typography>
-                    </CardContent>
-                    
-                    <div style={{
-                        display: 'flex',
-                        justifyContent:"space-between",
-                        flexDirection: 'row',
-                        marginLeft: "10px",
-                        marginRight: "30px"
-                    }}>
-                        <Typography variant="subtitle1" color="textPrimary">{props.like} likes</Typography>
-                        <Typography variant="subtitle1" color="textPrimary" style={{color:"#a6acb3", cursor: "pointer"}}>{props.comments.length} Comments</Typography>
-                    </div>
-                    <Actions id={props.id} isLiked={props.isLiked} onLikeAction={props.onLikeAction} />
-                    <Comments
-                        userPic={props.proPic}
-                        userId={props.id}
-                        onAddComment={props.onAddComment}
-                        comments={props.comments}
-                    />
-                </Card>
-            </Container>
-        </div>
-    )
+                    </Card>
+                </Container>
+            </>
+        )
+    }
 }
 
 export default Post;
-
-
