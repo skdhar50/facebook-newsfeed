@@ -33,7 +33,7 @@ class Post extends React.Component {
     };
   
     handleClose = () => {
-        this.setState({anchorEl: !Boolean(this.state.anchorEl)});
+        this.setState({anchorEl: null});
     };
 
     handleClickOpen = (value) => {
@@ -94,6 +94,7 @@ class Post extends React.Component {
                                 <div>
                                     <PostSettingMenu
                                         id={id}
+                                        handleClose={this.handleClose}
                                         handleClick={this.handleClick}
                                         anchorEl={this.state.anchorEl}
                                         onEditPost={() => this.setState({openModal: true})}

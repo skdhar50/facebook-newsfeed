@@ -11,8 +11,9 @@ const PostSettingMenu = (props) => {
         id,
         anchorEl,
         onEditPost,
+        handleClose,
         handleClick,
-        onDeletePost
+        onDeletePost,
     } = props;
 
     return (
@@ -26,6 +27,7 @@ const PostSettingMenu = (props) => {
                 getContentAnchorEl={null} // if not given then it will generate an error
                 keepMounted
                 open={Boolean(anchorEl)}
+                onClose={handleClose}
                 TransitionComponent={Fade}
                 anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                 transformOrigin={{ vertical: "top", horizontal: "center" }}
