@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/facebook-newsfeed/static/css/main.6b5d1243.chunk.css",
-    "main.js": "/facebook-newsfeed/static/js/main.16a8631d.chunk.js",
-    "main.js.map": "/facebook-newsfeed/static/js/main.16a8631d.chunk.js.map",
+    "main.js": "/facebook-newsfeed/static/js/main.246ea33c.chunk.js",
+    "main.js.map": "/facebook-newsfeed/static/js/main.246ea33c.chunk.js.map",
     "runtime-main.js": "/facebook-newsfeed/static/js/runtime-main.045bf985.js",
     "runtime-main.js.map": "/facebook-newsfeed/static/js/runtime-main.045bf985.js.map",
     "static/js/2.7a7111d6.chunk.js": "/facebook-newsfeed/static/js/2.7a7111d6.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.045bf985.js",
     "static/js/2.7a7111d6.chunk.js",
     "static/css/main.6b5d1243.chunk.css",
-    "static/js/main.16a8631d.chunk.js"
+    "static/js/main.246ea33c.chunk.js"
   ]
 }
